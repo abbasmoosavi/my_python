@@ -1,40 +1,35 @@
-print("Abbas Moosavi")
+import openpyxl as xl
+from openpyxl.chart import BarChart, Reference
 
-price = 10
-print(price)
+def process_workbook(filename):
+    wb= xl.load_workbook(filename)
+    sheet = wb['Sheet1']
+    cell = sheet['a1']
+    cell = sheet.cell(1,1)
 
-name= input('Please enter your name:')
-print('Hi, '+name)
+    print(cell.value)
+    print(sheet.max_row)
 
-birth_year = input('Enter your birthdate year:')
+    for row in range(1,sheet.max_row+1):
+        print(row)
+        
+    for row in range(2,sheet.max_row+1):
+        cell = sheet.cell(row, 3)
+        print(cell.value)
+        
+    for row in range(2,sheet.max_row+1):
+        cell = sheet.cell(row, 3)
+        coreccted_price = cell.value * 0.9
+        coreccted_price_cell = sheet.cell(row,4)
+        coreccted_price_cell.value = coreccted_price
+        
+    values = Reference(sheet,
+                min_row=2, 
+                max_row=sheet.max_row,
+                min_col=4,
+                max_col=4)
+    chart = BarChart()
+    chart.add_data(values)
+    sheet.add_chart(chart, 'e2')
+    wb.save(filename)
 
-age = 2025 - int(birth_year)
-print('You are '+str(age)+ ' years old.')
-
-course = 'Python for Begginers'
-print(course[2:])
-# thon for Begginers
-
-course = 'Python for Begginers'
-print(course[:5])
-# Pytho
-
-another = course[:]
-print(another)
-# Python for Begginers
-
-print(another[1:-1])
-# ython for Begginer
-
-message= f'{name} [{price}] is {age} old!'
-print(message)
-# Abbas [10] is 32 old!
-
-print(len(course))
-# 20
-
-print(course.upper())
-# PYTHON FOR BEGGINERS
-
-print('Python' in course)
-# True
